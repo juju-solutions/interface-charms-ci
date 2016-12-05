@@ -15,7 +15,7 @@ from charms.reactive import hook
 from charms.reactive import scopes
 
 
-class CharmsCIProvides(RelationBase):
+class CwrCIProvides(RelationBase):
     scope = scopes.GLOBAL
 
     @hook('{provides:charms-ci}-relation-joined')

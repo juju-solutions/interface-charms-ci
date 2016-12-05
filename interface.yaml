@@ -1,4 +1,4 @@
-name: charms-ci
-summary: Interface for relating to the Juju CI system
+name: cwr-ci
+summary: Interface for relating to Cloud Weather Report (part of the Juju CI system)
 version: 1
 maintainer: "Juju Big Data <bigdata@lists.ubuntu.com>"

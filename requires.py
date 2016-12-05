@@ -15,7 +15,7 @@ from charms.reactive import hook
 from charms.reactive import scopes
 
 
-class CharmsCIRequires(RelationBase):
+class CwrCIRequires(RelationBase):
     scope = scopes.GLOBAL
 
     def is_ready(self):
