@@ -38,6 +38,8 @@ class CharmsCIRequires(RelationBase):
         conv.remove_state('{relation_name}.joined')
         conv.remove_state('{relation_name}.ready')
 
-    def get_private_ip(self):
+    def get_connection_info(self):
         conv = self.conversation()
-        return conv.get_remote('private-address')
+        ip = conv.get_remote('private-address')
+        port = conv.get_remote('port')
+        return {"ip": ip, "port": port}

@@ -28,9 +28,10 @@ class CharmsCIProvides(RelationBase):
         conv = self.conversation()
         conv.remove_state('{relation_name}.joined')
 
-    def set_ready(self):
+    def set_ready(self, port):
         self.set_remote(data={
             'ready': True,
+            'port': port
         })
 
     def clear_ready(self):
