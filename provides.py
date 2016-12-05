@@ -15,15 +15,15 @@ from charms.reactive import hook
 from charms.reactive import scopes
 
 
-class JujuCIProvides(RelationBase):
+class CharmsCIProvides(RelationBase):
     scope = scopes.GLOBAL
 
-    @hook('{provides:juju-ci}-relation-joined')
+    @hook('{provides:charms-ci}-relation-joined')
     def joined(self):
         conv = self.conversation()
         conv.set_state('{relation_name}.joined')
 
-    @hook('{provides:juju-ci}-relation-departed')
+    @hook('{provides:charms-ci}-relation-departed')
     def departed(self):
         conv = self.conversation()
         conv.remove_state('{relation_name}.joined')

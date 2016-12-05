@@ -15,24 +15,24 @@ from charms.reactive import hook
 from charms.reactive import scopes
 
 
-class JujuCIRequires(RelationBase):
+class CharmsCIRequires(RelationBase):
     scope = scopes.GLOBAL
 
     def is_ready(self):
         return self.get_remote('ready', 'false').lower() == 'true'
 
-    @hook('{requires:juju-ci}-relation-joined')
+    @hook('{requires:charms-ci}-relation-joined')
     def joined(self):
         conv = self.conversation()
         conv.set_state('{relation_name}.joined')
 
-    @hook('{requires:juju-ci}-relation-changed')
+    @hook('{requires:charms-ci}-relation-changed')
     def changed(self):
         conv = self.conversation()
         if self.is_ready():
             conv.set_state('{relation_name}.ready')
 
-    @hook('{requires:juju-ci}-relation-departed')
+    @hook('{requires:charms-ci}-relation-departed')
     def departed(self):
         conv = self.conversation()
         conv.remove_state('{relation_name}.joined')

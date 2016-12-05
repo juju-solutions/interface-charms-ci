@@ -1,4 +1,4 @@
-name: juju-ci
+name: charms-ci
 summary: Interface for relating to the Juju CI system
 version: 1
 maintainer: "Juju Big Data <bigdata@lists.ubuntu.com>"
