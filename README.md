@@ -3,6 +3,7 @@
 This interface layer handles the communication between the Cloud Weather
 Report CI system and a client (e.g. Review Queue).
 
+
 # Usage
 
 ## Provides
@@ -37,7 +38,6 @@ def client_present(client):
 def client_should_stop(client):
     client.clear_ready()
 ```
-
 
 ## Requires
 
@@ -78,6 +78,7 @@ def stop():
 ```
 
 
-# Contact Information
+# Resources
 
-- <bigdata@lists.ubuntu.com>
+- [Juju mailing list](https://lists.ubuntu.com/mailman/listinfo/juju)
+- [Juju community](https://jujucharms.com/community)
