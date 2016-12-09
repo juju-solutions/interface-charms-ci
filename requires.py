@@ -10,6 +10,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
+
 from charms.reactive import RelationBase
 from charms.reactive import hook
 from charms.reactive import scopes
@@ -42,5 +44,5 @@ class CwrCIRequires(RelationBase):
         conv = self.conversation()
         ip = conv.get_remote('private-address')
         port = conv.get_remote('port')
-        controllers = conv.get_remote('controllers')
+        controllers = json.loads(conv.get_remote('controllers', []))
         return {"ip": ip, "port": port, "controllers": controllers}
