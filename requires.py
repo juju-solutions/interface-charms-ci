@@ -42,4 +42,5 @@ class CwrCIRequires(RelationBase):
         conv = self.conversation()
         ip = conv.get_remote('private-address')
         port = conv.get_remote('port')
-        return {"ip": ip, "port": port}
+        controllers = conv.get_remote('controllers')
+        return {"ip": ip, "port": port, "controllers": controllers}
