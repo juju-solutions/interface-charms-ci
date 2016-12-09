@@ -18,12 +18,12 @@ from charms.reactive import scopes
 class CwrCIProvides(RelationBase):
     scope = scopes.GLOBAL
 
-    @hook('{provides:charms-ci}-relation-joined')
+    @hook('{provides:cwr-ci}-relation-joined')
     def joined(self):
         conv = self.conversation()
         conv.set_state('{relation_name}.joined')
 
-    @hook('{provides:charms-ci}-relation-departed')
+    @hook('{provides:cwr-ci}-relation-departed')
     def departed(self):
         conv = self.conversation()
         conv.remove_state('{relation_name}.joined')

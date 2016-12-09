@@ -21,18 +21,18 @@ class CwrCIRequires(RelationBase):
     def is_ready(self):
         return self.get_remote('ready', 'false').lower() == 'true'
 
-    @hook('{requires:charms-ci}-relation-joined')
+    @hook('{requires:cwr-ci}-relation-joined')
     def joined(self):
         conv = self.conversation()
         conv.set_state('{relation_name}.joined')
 
-    @hook('{requires:charms-ci}-relation-changed')
+    @hook('{requires:cwr-ci}-relation-changed')
     def changed(self):
         conv = self.conversation()
         if self.is_ready():
             conv.set_state('{relation_name}.ready')
 
-    @hook('{requires:charms-ci}-relation-departed')
+    @hook('{requires:cwr-ci}-relation-departed')
     def departed(self):
         conv = self.conversation()
         conv.remove_state('{relation_name}.joined')
