@@ -38,8 +38,9 @@ class CwrCIRequires(RelationBase):
         conv.remove_state('{relation_name}.joined')
         conv.remove_state('{relation_name}.ready')
 
-    def get_connection_info(self):
+    def get_cwr_info(self):
         conv = self.conversation()
         ip = conv.get_remote('private-address')
         port = conv.get_remote('port')
-        return {"ip": ip, "port": port}
+        controllers = conv.get_remote('controllers')
+        return {"ip": ip, "port": port, "controllers": controllers}
