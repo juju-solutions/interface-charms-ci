@@ -44,5 +44,7 @@ class CwrCIRequires(RelationBase):
         conv = self.conversation()
         ip = conv.get_remote('private-address')
         port = conv.get_remote('port')
+        api_path = conv.get_remote('api-path')
         controllers = json.loads(conv.get_remote('controllers', []))
-        return {"ip": ip, "port": port, "controllers": controllers}
+        return {"ip": ip, "port": port, "api_path": api_path,
+                "controllers": controllers}

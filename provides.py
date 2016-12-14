@@ -30,10 +30,11 @@ class CwrCIProvides(RelationBase):
         conv = self.conversation()
         conv.remove_state('{relation_name}.joined')
 
-    def set_ready(self, port, controllers):
+    def set_ready(self, port, api_path, controllers):
         self.set_remote(data={
             'ready': True,
             'port': port,
+            'api-path': api_path,
             'controllers': json.dumps(sorted(controllers)),
         })
 
