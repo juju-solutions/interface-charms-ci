@@ -29,7 +29,10 @@ An example of a charm providing this interface would be:
 @when('cwr.started', 'client.joined')
 def client_present(client):
     if port and controllers:
-        client.set_ready(port, controllers)
+        client.set_controllers(controllers)
+        client.set_port(port)
+        client.set_rest_prefix('/ci')
+        client.set_ready()
     else:
         client.clear_ready()
 
@@ -52,22 +55,27 @@ The interface layer sets the following states for the client to react to:
   * `{relation_name}.joined`: The client has been related to CWR and is waiting
   for CWR to become ready.
 
-  * `{relation_name}.ready`: CWR is ready to be used.
+  * `{relation_name}.ready`: CWR is ready.
+
+  * `{relation_name}.store.ready`: CWR is ready and has been provided a token
+  that allows it to release charms to the store.
 
 The client can retrieve information from CWR when ready:
 
-  * `get_cwr_info`: Returns the port and controller data from CWR.
+  * `get_rest_url`: Returns `http://ip:port/path` REST URL for CWR.
+
+  *  `[controllers|port|rest_prefix|store_token]()`: Returns remote data.
 
 An example of a charm using this interface would be:
 
 ```python
-@when('cwr.ready')
+@when('cwr.store.ready')
 @when_not('revq.started')
 def start(cwr):
-    info = cwr.get_cwr_info()
-    cwr_endpoint = "http://{}:{}".format(info["ip"], info["port"])
-    cwr_controllers = info["controllers"]
-    start_revq(cwr_endpoint, cwr_controllers)
+    rest = cwr.get_rest_url()
+    controllers = cwr.controllers()
+    token = cwr.store_token()
+    start_revq(rest, controllers, token)
     set_state('revq.started')
 
 @when('revq.started')
