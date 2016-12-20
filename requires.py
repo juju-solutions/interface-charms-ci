@@ -19,6 +19,12 @@ from charms.reactive import scopes
 
 class CwrCIRequires(RelationBase):
     scope = scopes.GLOBAL
+    auto_accessors = ['port', 'private-address', 'rest-prefix', 'store-token']
+
+    def controllers(self):
+        conv = self.conversation()
+        controllers = json.loads(conv.get_remote('controllers', []))
+        return controllers
 
     def is_ready(self):
         return self.get_remote('ready', 'false').lower() == 'true'
@@ -33,18 +39,22 @@ class CwrCIRequires(RelationBase):
         conv = self.conversation()
         if self.is_ready():
             conv.set_state('{relation_name}.ready')
+            if self.store_token():
+                conv.set_state('{relation_name}.store.ready')
+            else:
+                conv.remove_state('{relation_name}.store.ready')
+        else:
+            conv.remove_state('{relation_name}.ready')
 
     @hook('{requires:cwr-ci}-relation-departed')
     def departed(self):
         conv = self.conversation()
         conv.remove_state('{relation_name}.joined')
         conv.remove_state('{relation_name}.ready')
+        conv.remove_state('{relation_name}.store.ready')
 
-    def get_cwr_info(self):
-        conv = self.conversation()
-        ip = conv.get_remote('private-address')
-        port = conv.get_remote('port')
-        api_path = conv.get_remote('api-path')
-        controllers = json.loads(conv.get_remote('controllers', []))
-        return {"ip": ip, "port": port, "api_path": api_path,
-                "controllers": controllers}
+    def get_rest_url(self):
+        ip = self.private_address()
+        port = self.port()
+        prefix = self.rest_prefix()
+        return 'http://{}:{}/{}'.format(ip, port, prefix)
